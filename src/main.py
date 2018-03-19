@@ -4,6 +4,7 @@ import time
 import sys
 
 import wordtrie
+import query
 
 ###
 # random_word
@@ -18,14 +19,15 @@ def random_word():
 
 def main(args):
     trie = wordtrie.WordTrie()
+    query.start(trie)
 
-    s = time.clock()
-    n = 0
-    for x in range(1000000):
-        w = random_word()
-        if trie.has_word(w):
-            n += 1
-    print('Stop: {}, words: {}'.format(time.clock() - s, n))
+    # s = time.clock()
+    # n = 0
+    # for x in range(1000000):
+        # w = random_word()
+        # if trie.has_word(w):
+            # n += 1
+    # print('Stop: {}, words: {}'.format(time.clock() - s, n))
 
 if __name__ == '__main__':
     main(sys.argv)
