@@ -53,7 +53,9 @@ def __value(c):
 # Removes a value from a set, and returns the set without that value.
 def __rem(s, c):
     sc = s.copy()
-    sc.remove(c)
+    sc[c] -= 1
+    if sc[c] <= 0:
+        del sc[c]
     return sc
 
 ###
@@ -145,9 +147,11 @@ def start(trie):
         except:
             continue
 
-        s = set()
+        s = {}
         for c in l:
-            s.add(c)
+            if c not in s:
+                s[c] = 0
+            s[c] += 1
 
         words = [(__value(x), x) for x in __search(trie.root, s, r)]
         words.sort()
