@@ -40,15 +40,15 @@ class Board(object):
 
     ###
     # __word_edges_helper
-    # 
+    #
     # A helper function for word_edges that recurs on each tile.
-    def __word_edges_helper(self, tile, seen=set(), edges=set()):
+    def __word_edges_helper(self, tile, seen, edges):
         seen.add(tile)
         peers = self.__peers(tile)
         for peer in peers:
             if peer in self.state:
                 if peer not in seen:
-                    self.__word_edges_helper(peer)
+                    self.__word_edges_helper(peer, seen, edges)
             else:
                 edges.add(peer)
         return edges
@@ -60,7 +60,7 @@ class Board(object):
     def word_edges(self):
         for k in self.state:
             src = k
-        return self.__word_edges_helper(src)
+        return self.__word_edges_helper(src, set(), set())
 
     ###
     # edge_direction
@@ -146,13 +146,6 @@ class Board(object):
             del ts['D']
 
         return ts
-
-    ##
-    # best_word
-    #
-    # Finds the best word at a given edge, 
-    def best_word(self, edge, letter_set, trie):
-        pass
 
 ###
 # test_str
@@ -281,6 +274,9 @@ def main():
 
     for edge in b.word_edges():
         print('{} => {}'.format(edge, b.edge_words(edge)))
+    for edge in b.word_edges():
+        b.state[edge] = 'E'
+    print(b)
 
 if __name__ == '__main__':
     main()
